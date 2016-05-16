@@ -1,0 +1,30 @@
+2016-05-16 19:31:28,876 - API_MANAGER - DEBUG - European Championships France 2016 not updated on api
+2016-05-16 19:31:28,876 - CACHE_MANAGER - DEBUG - get league European Championships France 2016 from the cache
+2016-05-16 19:31:29,180 - API_MANAGER - DEBUG - 1. Bundesliga 2015/16 not updated on api
+2016-05-16 19:31:29,180 - CACHE_MANAGER - DEBUG - get league 1. Bundesliga 2015/16 from the cache
+2016-05-16 19:31:29,181 - API_MANAGER - DEBUG - 2. Bundesliga 2015/16 not updated on api
+2016-05-16 19:31:29,181 - CACHE_MANAGER - DEBUG - get league 2. Bundesliga 2015/16 from the cache
+2016-05-16 19:31:29,181 - API_MANAGER - DEBUG - Ligue 1 2015/16 not updated on api
+2016-05-16 19:31:29,181 - CACHE_MANAGER - DEBUG - get league Ligue 1 2015/16 from the cache
+2016-05-16 19:31:29,181 - API_MANAGER - DEBUG - Ligue 2 2015/16 not updated on api
+2016-05-16 19:31:29,181 - CACHE_MANAGER - DEBUG - get league Ligue 2 2015/16 from the cache
+2016-05-16 19:31:29,182 - API_MANAGER - DEBUG - Premier League 2015/16 not updated on api
+2016-05-16 19:31:29,182 - CACHE_MANAGER - DEBUG - get league Premier League 2015/16 from the cache
+2016-05-16 19:31:29,182 - API_MANAGER - DEBUG - Primera Division 2015/16 not updated on api
+2016-05-16 19:31:29,182 - CACHE_MANAGER - DEBUG - get league Primera Division 2015/16 from the cache
+2016-05-16 19:31:29,182 - API_MANAGER - DEBUG - Segunda Division 2015/16 not updated on api
+2016-05-16 19:31:29,182 - CACHE_MANAGER - DEBUG - get league Segunda Division 2015/16 from the cache
+2016-05-16 19:31:29,183 - API_MANAGER - DEBUG - Serie A 2015/16 not updated on api
+2016-05-16 19:31:29,183 - CACHE_MANAGER - DEBUG - get league Serie A 2015/16 from the cache
+2016-05-16 19:31:29,183 - API_MANAGER - DEBUG - Primeira Liga 2015/16 not updated on api
+2016-05-16 19:31:29,183 - CACHE_MANAGER - DEBUG - get league Primeira Liga 2015/16 from the cache
+2016-05-16 19:31:29,183 - API_MANAGER - DEBUG - 3. Bundesliga 2015/16 not updated on api
+2016-05-16 19:31:29,183 - CACHE_MANAGER - DEBUG - get league 3. Bundesliga 2015/16 from the cache
+2016-05-16 19:31:29,184 - API_MANAGER - DEBUG - Eredivisie 2015/16 not updated on api
+2016-05-16 19:31:29,184 - CACHE_MANAGER - DEBUG - get league Eredivisie 2015/16 from the cache
+2016-05-16 19:31:29,184 - API_MANAGER - DEBUG - Eredivisie 2015/16 not present on the cache
+2016-05-16 19:31:29,184 - CACHE_MANAGER - DEBUG - set league Eredivisie 2015/16 on the cache
+2016-05-16 19:31:29,184 - API_MANAGER - DEBUG - Champions League 2015/16 not updated on api
+2016-05-16 19:31:29,185 - CACHE_MANAGER - DEBUG - get league Champions League 2015/16 from the cache
+2016-05-16 19:31:29,185 - API_MANAGER - DEBUG - League One 2015/16 not updated on api
+2016-05-16 19:31:29,185 - CACHE_MANAGER - DEBUG - get league League One 2015/16 from the cache
