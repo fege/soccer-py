@@ -1,6 +1,6 @@
 import requests
 from datetime import datetime
-from src.manager.CacheManager import CacheManager
+from manager.CacheManager import CacheManager
 import logging
 import logging.config
 logging.config.fileConfig("logging.conf")
