@@ -1,4 +1,4 @@
-from src.manager.ApiManager import ApiManager
+from manager.ApiManager import ApiManager
 
 if __name__ == '__main__':
     api = ApiManager()

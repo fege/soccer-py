@@ -13,7 +13,7 @@ class RedisDriver():
         self.redis = redis.StrictRedis(host=db_host, port=db_port, db=db_num, password=db_pwd)
 
     def set_value(self, type, field, value):
-        self.redis.hset(type,field, value)
+        self.redis.hset(type, field, value)
 
     def get_value(self, type, field):
         return self.redis.hget(type, field)
