@@ -45,10 +45,12 @@ class ApiManager():
         url = URL+"/v1/teams/"+str(id)
         team = requests.get(url, headers=HEADERS)
         team.raise_for_status()
+        self._LOGGER.debug("Load team "+team.json()['name']+" data")
         return team.json()
 
     def get_league_table(self, id):
 	url = URL+"/v1/soccerseasons/"+str(id)+"/leagueTable"
 	table = requests.get(url, headers=HEADERS)
 	table.raise_for_status()
+	self._LOGGER.debug("Load table "+table.json()['leagueCaption']+" data")
 	return table.json()
