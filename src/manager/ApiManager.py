@@ -1,6 +1,6 @@
 import requests
 from datetime import datetime
-from src.manager.CacheManager import CacheManager
+from manager.CacheManager import CacheManager
 import logging
 import logging.config
 logging.config.fileConfig("logging.conf")
@@ -23,10 +23,9 @@ class ApiManager():
         url = URL+"/v1/soccerseasons/?season="+year
         leagues = requests.get(url, headers=HEADERS)
         leagues.raise_for_status()
-        json_leagues = leagues.json()
         list_leagues = []
 
-        for league in json_leagues:
+        for league in leagues.json():
             last_update = datetime.strptime(league['lastUpdated'], '%Y-%m-%dT%H:%M:%SZ')
             if last_update < datetime.now():
                 self._LOGGER.debug(league["caption"]+" not updated on api")
@@ -41,3 +40,15 @@ class ApiManager():
                 self.cache.set_league(league["caption"], league)
                 list_leagues.append(league)
         return list_leagues
+
+    def get_team(self, id):
+        url = URL+"/v1/teams/"+str(id)
+        team = requests.get(url, headers=HEADERS)
+        team.raise_for_status()
+        return team.json()
+
+    def get_league_table(self, id):
+	url = URL+"/v1/soccerseasons/"+str(id)+"/leagueTable"
+	table = requests.get(url, headers=HEADERS)
+	table.raise_for_status()
+	return table.json()

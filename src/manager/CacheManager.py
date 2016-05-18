@@ -1,6 +1,6 @@
 import logging
 import logging.config
-logging.config.fileConfig("logging.conf")
+logging.config.fileConfig('logging.conf')
 
 
 class CacheManager():
@@ -10,7 +10,7 @@ class CacheManager():
     _LOGGER = logging.getLogger('CACHE_MANAGER')
 
     def __init__(self):
-        resource = "src.storage.RedisDriver"
+        resource = "storage.RedisDriver"
         resource_mod = __import__(resource, globals(), locals(), ['RedisDriver'])
         cache = getattr(resource_mod, 'RedisDriver')
         self.cache = cache()
