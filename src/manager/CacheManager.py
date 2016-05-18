@@ -15,10 +15,10 @@ class CacheManager():
         cache = getattr(resource_mod, 'RedisDriver')
         self.cache = cache()
 
-    def set_league(self,field, value):
-        self._LOGGER.debug("set league "+field+ " on the cache")
+    def set_league(self, field, value):
+        self._LOGGER.debug("set league "+field + " on the cache")
         self.cache.set_value('league', field, value)
 
     def get_league(self, field):
-        self._LOGGER.debug("get league "+field+ " from the cache")
+        self._LOGGER.debug("get league "+field + " from the cache")
         return self.cache.get_value('league', field)
