@@ -26,8 +26,7 @@ class ApiManager():
         list_leagues = []
 
         for league in leagues.json():
-            last_update = datetime.strptime(league['lastUpdated'], '%Y-%m-%dT%H:%M:%SZ')
-            if last_update < datetime.now():
+            if self.__check_validation(league['lastUpdated'], datetime.now()):
                 self._LOGGER.debug(league["caption"]+" not updated on api")
                 leag = self.cache.get_league(league["caption"])
                 if not leag:
@@ -49,8 +48,13 @@ class ApiManager():
         return team.json()
 
     def get_league_table(self, id):
-	url = URL+"/v1/soccerseasons/"+str(id)+"/leagueTable"
-	table = requests.get(url, headers=HEADERS)
-	table.raise_for_status()
-	self._LOGGER.debug("Load table "+table.json()['leagueCaption']+" data")
-	return table.json()
+        url = URL+"/v1/soccerseasons/"+str(id)+"/leagueTable"
+        table = requests.get(url, headers=HEADERS)
+        table.raise_for_status()
+        self._LOGGER.debug("Load table "+table.json()['leagueCaption']+" data")
+        return table.json()
+
+    def __check_validation(self, l_update, time):
+        l_update = datetime.strptime(l_update, '%Y-%m-%dT%H:%M:%SZ')
+        return l_update < time
+
