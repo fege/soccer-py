@@ -1,5 +1,4 @@
 import requests
-from datetime import datetime
 from manager.CacheManager import CacheManager
 import logging
 import logging.config
@@ -26,18 +25,19 @@ class ApiManager():
         list_leagues = []
 
         for league in leagues.json():
-            if self.__check_validation(league['lastUpdated'], datetime.now()):
-                self._LOGGER.debug(league["caption"]+" not updated on api")
-                leag = self.cache.get_league(league["caption"])
-                if not leag:
+            valid = self.__is_cache_valid(league)
+            if valid[0]:
+                cache_league = valid[1]
+                self._LOGGER.debug(valid[1]["caption"] + " valid on the cache")
+                if not cache_league: #not sure if necessary
                     self._LOGGER.debug(league["caption"] + " not present on the cache")
                     self.cache.set_league(league["caption"], league)
-                    list_leagues.append(league)
                 else:
-                    list_leagues.append(leag)
+                    league = cache_league
             else:
+                self._LOGGER.debug(league["caption"] + " not valid on the cache")
                 self.cache.set_league(league["caption"], league)
-                list_leagues.append(league)
+            list_leagues.append(league)
         return list_leagues
 
     def get_team(self, id):
@@ -54,7 +54,10 @@ class ApiManager():
         self._LOGGER.debug("Load table "+table.json()['leagueCaption']+" data")
         return table.json()
 
-    def __check_validation(self, l_update, time):
-        l_update = datetime.strptime(l_update, '%Y-%m-%dT%H:%M:%SZ')
-        return l_update < time
+    def __is_cache_valid(self, league):
+        cache_league = self.cache.get_league(league['caption'])
+        if cache_league:
+            return [cache_league['lastUpdated'] >= league['lastUpdated'], cache_league]
+        return [cache_league]
+
 

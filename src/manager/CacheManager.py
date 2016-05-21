@@ -1,3 +1,4 @@
+import json
 import logging
 import logging.config
 logging.config.fileConfig("logging.conf")
@@ -16,9 +17,12 @@ class CacheManager():
         self.cache = cache()
 
     def set_league(self, field, value):
-        self._LOGGER.debug("set league "+field + " on the cache")
-        self.cache.set_value('league', field, value)
+        self._LOGGER.debug("set league "+field + " on the cache from api")
+        self.cache.set_value('league', field, json.dumps(value))
 
     def get_league(self, field):
         self._LOGGER.debug("get league "+field + " from the cache")
-        return self.cache.get_value('league', field)
+        league = self.cache.get_value('league', field)
+        if league:
+            return json.loads(league.decode('utf-8'))
+        return None
