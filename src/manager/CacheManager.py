@@ -29,11 +29,22 @@ class CacheManager():
 
     def set_league_id(self, field, value):
         self._LOGGER.debug("table for reference " + field + " and " + str(value))
-        self.cache.set_value("league-id", field, value)
+        self.cache.set_value("league-id", field, json.dumps(value))
 
     def get_league_id(self, field):
-        self._LOGGER.debug("get id from league name" + field)
+        self._LOGGER.debug("get id from league name " + field)
         league_id = self.cache.get_value('league-id', field)
+        if league_id:
+            return str(json.loads(league_id.decode('utf-8')))
+        return None
+
+    def set_team_id(self, field, value):
+        self._LOGGER.debug("table for reference " + field + " and " + str(value))
+        self.cache.set_value("team-id", field, json.dumps(value))
+
+    def get_team_id(self, field):
+        self._LOGGER.debug("get id from team name" + field)
+        league_id = self.cache.get_value('team-id', field)
         if league_id:
             return str(json.loads(league_id.decode('utf-8')))
         return None
