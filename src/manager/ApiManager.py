@@ -37,6 +37,7 @@ class ApiManager():
                     self._LOGGER.debug(league["caption"] + " not present on the cache")
                 else:
                     league = cache_league
+                    self._LOGGER.debug(league["caption"] + " valid on the cache")
             else:
                 self._LOGGER.debug(league["caption"] + " not valid on the cache")
             list_leagues.append(league)
@@ -56,6 +57,7 @@ class ApiManager():
         league.raise_for_status()
         valid = self.__is_cache_valid(league.json())
         if not valid[0]:
+            self._LOGGER.debug(league.json()["caption"] + " not valid on the cache")
             self.cache.set_league(league.json()["caption"], league.json())
         return league.json()
 
@@ -67,22 +69,25 @@ class ApiManager():
         :return list teams :
         """
         valid = self.__is_cache_valid(name)
-        print(valid)
-        if not valid[0]:
-            #cache
-            pass
+        if valid[0]:
+            self._LOGGER.debug("league " + name + " valid on the cache")
+            list_teams = self.cache.get_team_leagues(name)
         else:
+            self._LOGGER.debug("league " + name + " not valid on the cache")
             self._LOGGER.debug("retrieve league id from name " + name)
             id = self.cache.get_league_id(name)
             url = URL + "/v1/soccerseasons/" + id + "/teams"
             teams = requests.get(url, headers=HEADERS)
             teams.raise_for_status()
-            list_teams, list_team_ids = []
+            list_teams, list_team_ids = [], []
             for team in teams.json()['teams']:
+                self.cache.set_team(team['name'], team)
                 self.cache.set_team_id(team['name'], team['id'])
                 list_team_ids.append(team['id'])
                 list_teams.append(team)
-                print(team)
+            self.cache.set_team_id_leagues(name, list_team_ids)
+            self.cache.set_team_leagues(name, list_teams)
+        return list_teams
 
     def get_team(self, id):
         url = URL+"/v1/teams/"+str(id)
@@ -122,6 +127,7 @@ class ApiManager():
             id = self.cache.get_league_id(league)
             url = URL + "/v1/soccerseasons/" + str(id)
             league = requests.get(url, headers=HEADERS).json()
+            print(cache_league)
         elif isinstance(league, dict):
             cache_league = self.cache.get_league(league["caption"])
         if cache_league:
