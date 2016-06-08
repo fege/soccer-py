@@ -71,6 +71,10 @@ class CacheManager():
             return json.loads(list_teams_id.decode('utf-8'))
         return None
 
+    def get_all_team_ids(self, value):
+        self._LOGGER.debug("get all list of " + value + " from the cache")
+        return self.cache.get_all(value)
+
     def set_team_leagues(self, field, value):
         self._LOGGER.debug("set list of teams for " + field + " on the cache from api")
         self.cache.set_value('league-teams', field, json.dumps(value))

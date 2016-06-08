@@ -17,3 +17,6 @@ class RedisDriver():
 
     def get_value(self, type, field):
         return self.redis.hget(type, field)
+
+    def get_all(self, type):
+        return self.redis.hgetall(type)
