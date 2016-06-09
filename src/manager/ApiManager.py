@@ -69,11 +69,11 @@ class ApiManager():
         :return list teams:
         """
         valid = self.__is_cache_valid(name)
-        list_teams = None
-        if valid[0]:
+        list_teams = self.cache.get_team_leagues(name)
+        if valid[0] and list_teams:
             self._LOGGER.debug("league " + name + " valid on the cache")
             list_teams = self.cache.get_team_leagues(name)
-        if not list_teams:
+        if not valid[0] and not list_teams:
             self._LOGGER.debug("league " + name + " not valid on the cache")
             self._LOGGER.debug("retrieve league id from name " + name)
             id = self.cache.get_league_id(name)
@@ -118,6 +118,7 @@ class ApiManager():
                     team = self.cache.get_team(name)
         if not team:
             self._LOGGER.debug(id + " not found on league-team-ids table")
+            self._LOGGER.debug("not possible to verify if the team is updated or not")
             self._LOGGER.debug("retrieve team using " + id + " from api")
             url = URL + "/v1/teams/" + str(id)
             team = requests.get(url, headers=HEADERS)

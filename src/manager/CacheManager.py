@@ -54,7 +54,7 @@ class CacheManager():
         self.cache.set_value("team-id", field, json.dumps(value))
 
     def get_team_id(self, field):
-        self._LOGGER.debug("get id from team name" + field)
+        self._LOGGER.debug("get id from team name " + field)
         team_id = self.cache.get_value('team-id', field)
         if team_id:
             return str(json.loads(team_id.decode('utf-8')))
