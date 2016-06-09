@@ -1,4 +1,6 @@
 .idea
 *.pyc
+dump.rdb
+*.log
 __pycache__
 
