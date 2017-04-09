@@ -78,6 +78,7 @@ class ApiManager():
             self._LOGGER.debug("retrieve league id from name " + name)
             id = self.cache.get_league_id(name)
             url = URL + "/v1/soccerseasons/" + id + "/teams"
+            self._LOGGER.debug(url)
             teams = requests.get(url, headers=HEADERS)
             teams.raise_for_status()
             list_teams, list_team_ids = [], []
@@ -97,11 +98,7 @@ class ApiManager():
         :param name:
         :return team:
         """
-        self._LOGGER.debug("retrieve team id from " + name)
-        id = self.cache.get_team_id(name)
-        if not id:
-            self._LOGGER.debug("no team id correspondence for " + name)
-            id = str(self.__find_team_id(name))
+        id = self.__find_team_id(name)
         self._LOGGER.debug("retrieve list league-team ids")
         league_ids = self.cache.get_all_team_ids('league-team-ids')
         team = None
@@ -127,6 +124,32 @@ class ApiManager():
             self.cache.set_team(team['name'], team)
             self.cache.set_team_id(team['name'], team['id'])
         return team
+
+    def get_player_team(self, name, position=''):
+        """
+        Given the name of the team retrieve the id first and with that
+        is going to return the json of the team players
+        :param name: str team name
+        :param position: str position optional
+        :return:
+        """
+        id = self.__find_team_id(name)
+        palyers = None
+        if not palyers:
+            self._LOGGER.debug("retrieve players of team using " + id + " from api")
+            url = URL + "/v1/teams/" + str(id) + "/players"
+            players = requests.get(url, headers=HEADERS)
+            players.raise_for_status()
+            players = players.json()
+            if position:
+                players_position = []
+                for player in players['players']:
+                    if player['position'] == position:
+                        players_position.append(player)
+                return players_position
+            # self.cache.set_team(team['name'], team)
+            # self.cache.set_team_id(team['name'], team['id'])
+        return players
 
     def get_league_table(self, name):
         self._LOGGER.debug("retrieve league id from name " + name)
@@ -154,7 +177,7 @@ class ApiManager():
         return standing
 
     def __is_cache_valid(self, league):
-        if isinstance(league, str):
+        if isinstance(league, str) or str(type(league)) == "<type 'unicode'>":
             cache_league = self.cache.get_league(league)
             id = self.cache.get_league_id(league)
             url = URL + "/v1/soccerseasons/" + str(id)
@@ -181,14 +204,19 @@ class ApiManager():
 
     def __find_team_id(self, name):
         """
-        Given a name of a team not queried before is looking in every season and league
-        to find a correspondence and return the team id
-        :param name:
-        :return team_id:
+        Given a name of a team retrieve the id from the cache or looking in every season and league
+        to find a correspondence
+        :param name: str team name
+        :return team_id: id
         """
-        for year in ['2015', '2016']:
-            for league in self.get_season_leagues(year):
-                for team in self.get_teams_league(league['caption']):
-                    if team['name'] == name:
-                        self._LOGGER.debug("found the league " + name)
-                        return team['id']
+        self._LOGGER.debug("retrieve team id from " + name)
+        id = self.cache.get_team_id(name)
+        if not id:
+            self._LOGGER.debug("no team id correspondence for " + name)
+            for year in ['2015', '2016', '2017']:
+                for league in self.get_season_leagues(year):
+                    for team in self.get_teams_league(league['caption']):
+                        if team['name'] == name:
+                            self._LOGGER.debug("found the league " + name)
+                            id = team['id']
+        return id
