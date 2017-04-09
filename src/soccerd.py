@@ -11,10 +11,12 @@ if __name__ == '__main__':
     print("-------------------------")
     #pprint(api.get_teams_league('Premier League 2015/16'))
     print("-------------------------")
-    pprint(api.get_team('Manchester United FC'))
+    #pprint(api.get_team('FC Internazionale Milano'))
     print("-------------------------")
-    #pprint(api.get_league('Serie A 2015/16'))
+    pprint(api.get_player_team('FC Internazionale Milano', "Centre Back"))
+    #pprint(api.get_league('Serie A 2016/17'))
     #pprint(api.get_teams_league('Serie A 2015/16'))
+    #pprint(api.get_league_table('Serie A 2016/17'))
     #standing = api.get_league_table('Premier League 2015/16')
     #for t in standing['standing']:
     #    if len(t["team"]) < 8:
